@@ -72,11 +72,15 @@
       v-show="list.prints.length"
       class="btn-container flex justify-content-around"
     >
-      <template v-for="item in supports" :key="item">
-        <button type="primary" size="mini" @tap.stop="toPrint(typeMap[item])">
-          前去{{ item }}
-        </button>
-      </template>
+      <button
+        v-for="item in supports"
+        :key="item"
+        type="primary"
+        size="mini"
+        @tap.stop="toPrint(typeMap[item])"
+      >
+        前去{{ item }}
+      </button>
     </view>
   </view>
 </template>
