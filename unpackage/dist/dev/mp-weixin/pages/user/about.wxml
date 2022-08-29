@@ -1,0 +1,1 @@
+<view class="page-container bg-white tac">关于我们</view>

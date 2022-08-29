@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "打印参数高级设置",
+  "usingComponents": {
+    "uni-set-high": "/components/uni-set-high"
+  }
+}

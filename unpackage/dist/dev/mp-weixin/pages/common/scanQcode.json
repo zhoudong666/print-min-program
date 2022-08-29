@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "扫描打印机二维码",
+  "usingComponents": {
+    "uni-scan": "/components/uni-scan"
+  }
+}

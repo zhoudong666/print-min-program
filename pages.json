@@ -1,0 +1,187 @@
+{
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    // {
+    //   "path": "pages/testPage/index",
+    //   "name": "testPage",
+    //   "meta": { "title": "testPage" },
+    //   "style": { "navigationBarTitleText": "testPage" }
+    // },
+    {
+      "path": "pages/dashbord/index",
+      "name": "dashbord",
+      "meta": { "title": "首页" },
+      "style": { "navigationBarTitleText": "首页" }
+    },
+    {
+      "path": "pages/dashbord/developing",
+      "name": "developing",
+      "meta": { "title": "开发中..." },
+      "style": { "navigationBarTitleText": "开发中..." }
+    },
+    {
+      "path": "pages/scan/index",
+      "name": "scan",
+      "meta": { "title": "扫码" },
+      "style": { "navigationBarTitleText": "扫码" }
+    },
+    {
+      "path": "pages/user/index",
+      "name": "user",
+      "meta": { "title": "我的" },
+      "style": { "navigationBarTitleText": "我的" }
+    },
+    {
+      "path": "pages/user/details/details",
+      "name": "details",
+      "meta": { "title": "详情" },
+      "style": { "navigationBarTitleText": "详情" }
+    },
+    {
+      "path": "pages/user/details/refusePage",
+      "name": "refusePage",
+      "meta": { "title": "申请退款" },
+      "style": { "navigationBarTitleText": "申请退款" }
+    },
+    {
+      "path": "pages/shopInfo/nearShops",
+      "name": "nearShops",
+      "meta": { "title": "附近店铺" },
+      "style": { "navigationBarTitleText": "附近店铺" }
+    },
+    {
+      "path": "pages/shopInfo/index",
+      "name": "shopInfo",
+      "meta": { "title": "打印店信息" }
+    },
+    {
+      "path": "pages/printSteps/choose",
+      "name": "choose",
+      "meta": { "title": "文档选择" },
+      "style": { "navigationBarTitleText": "文档选择" }
+    },
+    {
+      "path": "pages/printSteps/setParams",
+      "name": "setParams",
+      "meta": { "title": "已选文档列表" },
+      "style": { "navigationBarTitleText": "已选文档列表" }
+    },
+    {
+      "path": "pages/printSteps/setHighParams",
+      "name": "setHighParams",
+      "meta": { "title": "打印参数高级设置" },
+      "style": { "navigationBarTitleText": "打印参数高级设置" }
+    },
+    {
+      "path": "pages/common/choosePrinter",
+      "name": "choosePrinter",
+      "meta": { "title": "选择打印机" },
+      "style": { "navigationBarTitleText": "选择打印机" }
+    },
+    {
+      "path": "pages/common/scanQcode",
+      "name": "scanQcode",
+      "meta": { "title": "扫描打印机二维码" },
+      "style": { "navigationBarTitleText": "扫描打印机二维码" }
+    },
+    {
+      "path": "pages/copyPages/instruction",
+      "name": "copyPages",
+      "meta": { "title": "操作指南" },
+      "style": { "navigationBarTitleText": "操作指南" }
+    },
+    {
+      "path": "pages/copyPages/copySetParams",
+      "name": "copySetParams",
+      "meta": { "title": "参数设置" },
+      "style": { "navigationBarTitleText": "参数设置" }
+    },
+    {
+      "path": "pages/common/payPage",
+      "name": "payPage",
+      "meta": { "title": "确认支付" },
+      "style": { "navigationBarTitleText": "确认支付" }
+    },
+    {
+      "path": "pages/common/waiting",
+      "name": "waiting",
+      "meta": { "title": "处理中..." },
+      "style": { "navigationBarTitleText": "处理中..." }
+    },
+    {
+      "path": "pages/user/myOrder",
+      "name": "myOrder",
+      "meta": { "title": "我的订单" },
+      "style": { "navigationBarTitleText": "我的订单" }
+    },
+    {
+      "path": "pages/user/myPoint",
+      "name": "myPoint",
+      "meta": { "title": "我的积分" },
+      "style": { "navigationBarTitleText": "我的积分" }
+    },
+    {
+      "path": "pages/user/myScan",
+      "name": "myScan",
+      "meta": { "title": "扫描件下载" },
+      "style": { "navigationBarTitleText": "扫描件下载" }
+    },
+    {
+      "path": "pages/user/myReport",
+      "name": "myReport",
+      "meta": { "title": "统计报表" },
+      "style": { "navigationBarTitleText": "统计报表", "enablePullDownRefresh": true }
+    },
+    {
+      "path": "pages/user/intro",
+      "name": "intro",
+      "meta": { "title": "操作指南" },
+      "style": { "navigationBarTitleText": "操作指南" }
+    },
+    {
+      "path": "pages/user/about",
+      "name": "about",
+      "meta": { "title": "关于我们" },
+      "style": { "navigationBarTitleText": "关于我们" }
+    },
+    {
+      "path": "pages/dashbord/uplaodWebView",
+      "name": "uplaodWebView",
+      "meta": { "title": "青米云印" },
+      "style": { "navigationBarTitleText": "青米云印" }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "自助打印",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    // 配置tabbar样式
+    // 文字颜色
+    "color": "#000",
+    // 选中文字颜色
+    "selectedColor": "#FF9966",
+    // tabbar背景色
+    "backgroundColor": "#FFFFFF",
+    // tabbar边框色
+    "borderStyle": "black",
+    // tabbar位置 默认bottom 在移动端不生效，在小欧程序中，不显示图标
+    // "position":"top",
+    // list数组中存放tabbar的具体配置
+    "list": [
+      { "text": "首页", "pagePath": "pages/dashbord/index" },
+      { "text": "扫码", "pagePath": "pages/scan/index" },
+      { "text": "我的", "pagePath": "pages/user/index" }
+    ]
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@/components/uni-$1.vue", // 匹配components目录内的vue文件
+      "^vue-file-(.*)": "packageName/path/to/vue-file-$1.vue" // 匹配node_modules内的vue文件
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

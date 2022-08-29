@@ -1,0 +1,68 @@
+{
+  "pages": [
+    "pages/dashbord/index",
+    "pages/dashbord/developing",
+    "pages/scan/index",
+    "pages/user/index",
+    "pages/user/details/details",
+    "pages/user/details/refusePage",
+    "pages/shopInfo/nearShops",
+    "pages/shopInfo/index",
+    "pages/printSteps/choose",
+    "pages/printSteps/setParams",
+    "pages/printSteps/setHighParams",
+    "pages/common/choosePrinter",
+    "pages/common/scanQcode",
+    "pages/copyPages/instruction",
+    "pages/copyPages/copySetParams",
+    "pages/common/payPage",
+    "pages/common/waiting",
+    "pages/user/myOrder",
+    "pages/user/myPoint",
+    "pages/user/myScan",
+    "pages/user/myReport",
+    "pages/user/intro",
+    "pages/user/about",
+    "pages/dashbord/uplaodWebView"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "自助打印",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#FF9966",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/dashbord/index"
+      },
+      {
+        "text": "扫码",
+        "pagePath": "pages/scan/index"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/user/index"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "connectSocket": 90000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {}
+}

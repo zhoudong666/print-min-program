@@ -1,0 +1,210 @@
+$text-colors: (
+	'default': #000,
+	'tip': #969798,
+	'light': #5d8ec6,
+	'notice': #ff0000,
+	'name': #3884bb,
+	'white': #fff,
+	'title': #3783ba,
+	'grey': #6c6c6c,
+	'print': #ff9966,
+	'preview': #e74100,
+	'ccc': #ccc
+);
+
+$bg-colors: (
+	'tip': #ddf4fe,
+	'bw': #8799a3,
+	'colorful': #f37b1d,
+	'white': #fff,
+	'print': #ff9966,
+	'numbtn': #f0f0f0,
+	'operator': #e43e00,
+	'blank':
+		rgba(
+			$color: #ffffff,
+			$alpha: 0
+		)
+);
+
+$btn-colors: (
+	'authorize': #68c646,
+	//授权
+		'print': #f0f0f0,
+	'printhover': #c9c9c9
+);
+
+$bd-colors: (
+	'primary': #fff,
+	//授权
+		'default': #ccc,
+	'print': #ff9966,
+	'black': #000
+);
+
+// 设置字体颜色
+@each $key, $val in $text-colors {
+	.c-#{$key} {
+		color: $val;
+	}
+}
+
+// 设置背景色
+@each $key, $val in $bg-colors {
+	.bg-#{$key} {
+		background-color: $val;
+	}
+}
+
+// 设置按钮颜色
+
+@each $key, $val in $btn-colors {
+	.c-btn-#{$key} {
+		background-color: $val;
+	}
+}
+
+$bd-type: (
+	'solid': solid,
+	'dotted': dotted,
+	'dashed': dashed
+);
+
+// 设置边框样式
+@each $colorKey, $colorVal in $bd-colors {
+	@each $typeKey, $typeVal in $bd-type {
+		@for $i from 1 through 20 {
+			$base: 1;
+			$size: $base * $i;
+			$fontsize: $size + 0upx;
+			.bd-#{$typeKey}-#{$colorKey}-#{$size} {
+				border: $fontsize $typeVal $colorVal;
+			}
+
+			.bd-top-#{$typeKey}-#{$colorKey}-#{$size} {
+				border-top: $fontsize $typeVal $colorVal;
+			}
+
+			.bd-bottom-#{$typeKey}-#{$colorKey}-#{$size} {
+				border-bottom: $fontsize $typeVal $colorVal;
+			}
+
+			.bd-left-#{$typeKey}-#{$colorKey}-#{$size} {
+				border-left: $fontsize $typeVal $colorVal;
+			}
+
+			.bd-right-#{$typeKey}-#{$colorKey}-#{$size} {
+				border-right: $fontsize $typeVal $colorVal;
+			}
+		}
+	}
+}
+
+// 设置字体粗细
+@each $weight in normal, bold {
+	$w: $weight;
+	.fw-#{$weight} {
+		font-weight: $w;
+	}
+}
+
+// 字体字号与字体粗细结合
+@each $weight in normal, bold {
+	$w: $weight;
+	@for $i from 1 through 100 {
+		$base: 1;
+		$fontsize: $base * $i;
+		.fs-#{$fontsize}-fw-#{$weight} {
+			font-size: $fontsize + 0upx;
+			font-weight: $w;
+		}
+	}
+}
+
+@for $i from 1 through 100 {
+	$base: 1;
+	$fontsize: $base * $i;
+	// 设置字号
+	.fs-#{$fontsize} {
+		font-size: $fontsize + 0upx;
+	}
+	// 设置边框圆角
+	.bd-radius-#{$fontsize} {
+		border-radius: $fontsize + 0upx;
+	}
+
+	.bd-top-left-radius-#{$fontsize} {
+		border-top-left-radius: $fontsize + 0upx;
+	}
+
+	.bd-top-right-radius-#{$fontsize} {
+		border-top-right-radius: $fontsize + 0upx;
+	}
+
+	.bd-bottom-left-radius-#{$fontsize} {
+		border-bottom-left-radius: $fontsize + 0upx;
+	}
+
+	.bd-bottom-right-radius-#{$fontsize} {
+		border-bottom-right-radius: $fontsize + 0upx;
+	}
+
+	.padding-#{$fontsize} {
+		padding: $fontsize + 0upx;
+	}
+
+	.padding-top-#{$fontsize} {
+		padding-top: $fontsize + 0upx;
+	}
+
+	.padding-bottom-#{$fontsize} {
+		padding-bottom: $fontsize + 0upx;
+	}
+
+	.padding-right-#{$fontsize} {
+		padding-right: $fontsize + 0upx;
+	}
+
+	.padding-left-#{$fontsize} {
+		padding-left: $fontsize + 0upx;
+	}
+
+	.margin-#{$fontsize} {
+		margin: $fontsize + 0upx;
+	}
+
+	.margin-top-#{$fontsize} {
+		margin-top: $fontsize + 0upx;
+	}
+
+	.margin-bottom-#{$fontsize} {
+		margin-bottom: $fontsize + 0upx;
+	}
+
+	.margin-right-#{$fontsize} {
+		margin-right: $fontsize + 0upx;
+	}
+
+	.margin-left-#{$fontsize} {
+		margin-left: $fontsize + 0upx;
+	}
+}
+
+//  设置flex弹性布局方向
+@each $type in row, row-reverse, column, column-reverse {
+	.flex-#{$type} {
+		flex-direction: $type;
+	}
+}
+// 设置flex弹性布局 是否换行
+@each $wrap in wrap, nowrap {
+	.flex-#{$wrap} {
+		flex-wrap: $wrap;
+	}
+}
+// 设置flex弹性布局 单行对其方式
+@each $align in flex-start, center, flex-end {
+	.flex-align-items-#{$align} {
+		align-items: $align;
+	}
+}
