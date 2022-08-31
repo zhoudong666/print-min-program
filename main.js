@@ -17,8 +17,10 @@ import api from "@/utils/api.js";
 import "./assets/main.scss";
 import "./assets/common.css";
 
+import { requestUrl } from "./urlConfig";
+
 Vue.prototype.$Q = request;
-Vue.prototype.$prefix = "https://api.qmprint.cn";
+Vue.prototype.$prefix = requestUrl;
 
 // 用法 this.$api(url,params) // url:请求地址名称 params:拼接参数
 Vue.prototype.$api = api.getUrl;

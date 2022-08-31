@@ -1,10 +1,12 @@
+import { requestUrl } from "../urlConfig";
+
 /**
  * A Request useing App network request design {@link http://ext.dcloud.net.cn/plugin?id=709}
  * @author Jamling <li.jamling@gmail.com>
  * @version 1.0.1
  *
  **/
-"use strict";
+("use strict");
 class Request {
   /**
    * @description 网络请求的默认配置
@@ -420,7 +422,7 @@ function getUrlCurrent() {
 }
 
 request.setConfig({
-  baseUrl: "https://api.qmprint.cn",
+  baseUrl: requestUrl,
   debug: true,
 });
 
@@ -436,7 +438,7 @@ request.interceptor.request = (config) => {
   // uni.setStorageSync('loginRedirect', getUrlCurrent())
   // 给header添加全局请求参数token
   if (!config.header.Authorization) {
-    if (!config.url.startsWith("https://api.qmprint.cn/p/")) {
+    if (!config.url.startsWith(requestUrl + "/p/")) {
       config.header.Authorization = "";
     } else {
       config.header.Authorization = token ? token : "";

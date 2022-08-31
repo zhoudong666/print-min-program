@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import { websocketUrl } from "../../urlConfig";
 export default {
   async onShow() {
     this.isCopyOrScan = getApp().globalData.isPrintOrCopyOrScan;
@@ -262,8 +263,7 @@ export default {
     connectSocketInit(appCode, cid) {
       var that = this;
       that.socketTask = uni.connectSocket({
-        // /api.seek-nj.com/api/anon/ws/printer/
-        url: `wss://api.qmprint.cn/api/anon/ws/printer/${appCode}/${cid}`,
+        url: `${websocketUrl}/api/anon/ws/printer/${appCode}/${cid}`,
         success(data) {
           console.log("websocket连接成功", data);
         },

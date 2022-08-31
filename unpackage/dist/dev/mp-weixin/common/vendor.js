@@ -762,7 +762,7 @@ function populateParameters(result) {var _result$brand =
 
   var parameters = {
     appId: "__UNI__F9707DD",
-    appName: "print-wx",
+    appName: "print-min-program",
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
@@ -871,7 +871,7 @@ var getAppBaseInfo = {
 
     result = sortObject(Object.assign(result, {
       appId: "__UNI__F9707DD",
-      appName: "print-wx",
+      appName: "print-min-program",
       appVersion: "1.0.0",
       appVersionCode: "100",
       appLanguage: getAppLanguage(hostLanguage),
@@ -1430,7 +1430,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-wx","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8518,7 +8518,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-wx","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8539,14 +8539,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"print-wx","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"print-wx","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8632,7 +8632,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-wx","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9042,9 +9042,9 @@ internalMixin(Vue);
 
 /***/ }),
 /* 5 */
-/*!********************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/pages.json ***!
-  \********************************************************************/
+/*!*********************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/pages.json ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9843,20 +9843,22 @@ if (hadRuntime) {
 
 /***/ }),
 /* 12 */
-/*!**************************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/utils/request.js ***!
-  \**************************************************************************/
+/*!***************************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/utils/request.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {/**
- * A Request useing App network request design {@link http://ext.dcloud.net.cn/plugin?id=709}
- * @author Jamling <li.jamling@gmail.com>
- * @version 1.0.1
- *
- **/
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 9));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 9));var _urlConfig = __webpack_require__(/*! ../urlConfig */ 13);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+/**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * A Request useing App network request design {@link http://ext.dcloud.net.cn/plugin?id=709}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * @author Jamling <li.jamling@gmail.com>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * @version 1.0.1
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     **/
+"use strict";var
 Request = /*#__PURE__*/function () {function Request() {_classCallCheck(this, Request);_defineProperty(this, "config",
 
 
@@ -10345,7 +10347,7 @@ function getUrlCurrent() {var routes = getCurrentPages(); // 获取当前打开�
   var curRoute = routes[routes.length - 1].route; //获取当前页面路由
   var curParam = routes[routes.length - 1].options; //获取路由参数
   // 拼接参数
-  var param = "";for (var key in curParam) {param += "&" + key + "=" + curParam[key];}return curRoute + "?" + param;}request.setConfig({ baseUrl: "https://api.qmprint.cn", debug: true }); // 请求拦截
+  var param = "";for (var key in curParam) {param += "&" + key + "=" + curParam[key];}return curRoute + "?" + param;}request.setConfig({ baseUrl: _urlConfig.requestUrl, debug: true }); // 请求拦截
 request.interceptor.request = function (config) {var token = uni.getStorageSync("token"); // if(!token){
   // 	uni.redirectTo({
   // 		url:'/pages/mine/login?redirect='+getUrlCurrent()
@@ -10354,7 +10356,7 @@ request.interceptor.request = function (config) {var token = uni.getStorageSync(
   // }
   // uni.setStorageSync('loginRedirect', getUrlCurrent())
   // 给header添加全局请求参数token
-  if (!config.header.Authorization) {if (!config.url.startsWith("https://api.qmprint.cn/p/")) {config.header.Authorization = "";} else {config.header.Authorization = token ? token : "";}} // 添加一个自定义的参数，默认异常请求都弹出一个toast提示
+  if (!config.header.Authorization) {if (!config.url.startsWith(_urlConfig.requestUrl + "/p/")) {config.header.Authorization = "";} else {config.header.Authorization = token ? token : "";}} // 添加一个自定义的参数，默认异常请求都弹出一个toast提示
   if (config.toastError === undefined) {config.toastError = true;}return config;}; // 全局的业务拦截
 request.interceptor.response = function (res, config) {config.businessSuccess = true; // console.log('resresres',res)
   return res;}; // 全局的错误异常处理
@@ -10375,9 +10377,26 @@ request.interceptor.fail = /*#__PURE__*/function () {var _ref = _asyncToGenerato
 
 /***/ }),
 /* 13 */
-/*!**********************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/utils/api.js ***!
-  \**********************************************************************/
+/*!***********************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/urlConfig.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.websocketUrl = exports.requestUrl = void 0; // 青米的线上接口   appId = wxbd253487f7bf47ea
+// export const requestUrl =    "https://api.qmprint.cn";
+// export const websocketUrl = "wss://api.qmprint.cn";
+
+// 数探云的接口  appId = wx5928115a94b3df94
+var requestUrl = "https://api.seek-nj.com";exports.requestUrl = requestUrl;
+var websocketUrl = "wss://api.seek-nj.com";exports.websocketUrl = websocketUrl;
+
+/***/ }),
+/* 14 */
+/*!***********************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/utils/api.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10457,9 +10476,9 @@ function getUrl(resUrl, params) {
 { getUrl: getUrl };exports.default = _default;
 
 /***/ }),
-/* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */
 /*!**********************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
   \**********************************************************************************************************/
@@ -10587,10 +10606,10 @@ function normalizeComponent (
 
 
 /***/ }),
-/* 17 */
-/*!**************************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/utils/filters.js ***!
-  \**************************************************************************/
+/* 18 */
+/*!***************************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/utils/filters.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10603,16 +10622,16 @@ _vue.default.filter('filter2dot', function (arg) {
 });
 
 /***/ }),
-/* 18 */
-/*!************************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/utils/login.js ***!
-  \************************************************************************/
+/* 19 */
+/*!*************************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/utils/login.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.loginForWx = loginForWx;exports.xartlogin = xartlogin;exports.checkIsLogin = checkIsLogin;exports.goLogin = goLogin;exports.goToUrl = goToUrl;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 9));var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 12));
-var _api = _interopRequireDefault(__webpack_require__(/*! ./api.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+var _api = _interopRequireDefault(__webpack_require__(/*! ./api.js */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 
 function loginForWx() {
   var infos = {};
@@ -10773,10 +10792,10 @@ goToUrl(_x3) {return _goToUrl.apply(this, arguments);}function _goToUrl() {_goTo
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 19 */
-/*!************************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/utils/utils.js ***!
-  \************************************************************************/
+/* 20 */
+/*!*************************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/utils/utils.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10805,7 +10824,7 @@ goToUrl(_x3) {return _goToUrl.apply(this, arguments);}function _goToUrl() {_goTo
 
 
 
-var _login = __webpack_require__(/*! @/utils/login.js */ 18);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 获取地理位置
+var _login = __webpack_require__(/*! @/utils/login.js */ 19);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 获取地理位置
 function getLocaltion() {var _this = this;return new Promise(function (resolve) {var that = _this;uni.getLocation({ type: "gcj02", success: function success(res) {// console.log('地理位置1112', res)
         resolve({ myLat: res.latitude, myLng: res.longitude });}, fail: function fail(error) {uni.showToast({ icon: "none", title: "您拒绝了位置授权 ！", duration: 2000 });} });});} /**
                                                                                                                                                                               * @description 判断是否授权 某个 权限
@@ -10885,10 +10904,10 @@ function getLocaltion() {var _this = this;return new Promise(function (resolve) 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 20 */
-/*!**************************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/assets/main.scss ***!
-  \**************************************************************************/
+/* 21 */
+/*!***************************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/assets/main.scss ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10897,10 +10916,10 @@ function getLocaltion() {var _this = this;return new Promise(function (resolve) 
   
 
 /***/ }),
-/* 21 */
-/*!***************************************************************************!*\
-  !*** E:/Project-Code/example-projects/print-minProgram/assets/common.css ***!
-  \***************************************************************************/
+/* 22 */
+/*!****************************************************************************!*\
+  !*** E:/Project-Code/example-projects/print-min-program/assets/common.css ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
