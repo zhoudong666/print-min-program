@@ -9,7 +9,11 @@
       circular
     >
       <swiper-item v-for="(item, index) in lunbo" :key="index">
-        <image :src="item.imgUrl" mode="scaleToFill"></image>
+        <image
+          :src="item.imgUrl"
+          @error="errorLoad(index, $event)"
+          mode="scaleToFill"
+        ></image>
       </swiper-item>
     </swiper>
 
@@ -87,6 +91,9 @@ export default {
       getApp().globalData.isTabbarScan = "";
       getApp().globalData.shopCode = data.shopCode;
       this.$goToUrl("/pages/shopInfo/index");
+    },
+    errorLoad(i, e) {
+      this.lunbo.splice(i, 1, { imgUrl: `/static/swiper/swiper${i + 1}.jpg` });
     },
   },
 };

@@ -511,6 +511,7 @@ request.interceptor.fail = async (res, config) => {
       duration: 2000,
       icon: "none",
     });
+    uni.navigateTo({ url: "pages/dashbord/index" });
   }
   return ret;
 };

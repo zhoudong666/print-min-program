@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import SparkMD5 from "@/tools/spark-md5.js";
 export default {
   data() {
     return {
@@ -90,11 +91,12 @@ export default {
     // 获取微信聊天文档
     getWxFile() {
       const that = this;
-      wx.chooseMessageFile({
+      uni.chooseMessageFile({
         count: 9,
         type: "file",
         // extension:['.doc','.xlsx','.docx','.pdf','.ppt'],
         success(res) {
+          // console.log(res);
           // tempFilePath可以作为img标签的src属性显示图片
           const tempFilePaths = res.tempFiles;
           uni.showLoading({ title: "上传中...", mask: true });
@@ -107,7 +109,7 @@ export default {
     getWxImg() {
       const that = this;
       this.imageName = "聊天图片";
-      wx.chooseMessageFile({
+      uni.chooseMessageFile({
         count: 9,
         type: "image",
         extension: [".png", ".jpg", ".jpeg"],
@@ -128,7 +130,7 @@ export default {
     getLocalImg() {
       const that = this;
       this.imageName = "本地图片";
-      wx.chooseImage({
+      uni.chooseImage({
         count: 9,
         sizeType: ["original", "compressed"],
         sourceType: ["album", "camera"],
@@ -141,6 +143,57 @@ export default {
         },
       });
     },
+
+    // 读取选择的文件的md5 //////////////////////
+    myReadFileMD5(filePath) {
+      return new Promise(function (resolve, reject) {
+        uni.getFileSystemManager().readFile({
+          filePath, //选择图片返回的相对路径
+          // encoding: 'binary', //编码格式
+          success: (res) => {
+            //成功的回调
+            let spark = new SparkMD5.ArrayBuffer();
+            spark.append(res.data);
+            let hexHash = spark.end(false);
+            // console.log(333333, hexHash);
+            resolve(hexHash);
+          },
+        });
+      });
+    },
+    // 请求2.1成功  发起putObject请求，直传OSS
+    upToOss(path, tempTokenRes) {
+      return new Promise(function (resolve, reject) {
+        uni.uploadFile({
+          url: "https://oss.qmprint.cn",
+          filePath: path,
+          name: "file", //必须填file
+          header: { "Content-Type": "multipart/form-data" },
+          formData: {
+            key: tempTokenRes.fileKey,
+            policy: tempTokenRes.policyBase64,
+            OSSAccessKeyId: tempTokenRes.accessid,
+            signature: tempTokenRes.signature,
+            success_action_status: "200",
+          },
+          success: function (res) {
+            resolve();
+          },
+          fail: function (res) {
+            uni.hideLoading();
+            uni.showModal({
+              title: "错误提示",
+              content: "上传失败",
+              showCancel: false,
+              success: function (res) {},
+            });
+            reject();
+            return;
+          },
+        });
+      });
+    },
+
     // 上传到oss
     async getammeternumber(fileList, i, length) {
       const that = this;
@@ -157,26 +210,23 @@ export default {
       let OrgiName = fileList[i].name;
       let fileSize = fileList[i].size;
 
-      //  3、调用  2.1:小程序直传，获取临时授权token 接口
-      const tempTokenRes = await this.$Q.post({
-        url: this.$api("print_ossToken"),
-        data: { extName: extName },
+      const md5 = await this.myReadFileMD5(path);
+      const { checkFlag, transFile } = await this.$Q.post({
+        url: this.$api("print_checkMd5"),
+        data: { md5 },
         header: { "Content-Type": "application/x-www-form-urlencoded" },
       });
-      //请求2.1成功  发起putObject请求，直传OSS
-      uni.uploadFile({
-        url: "https://oss.qmprint.cn",
-        filePath: path,
-        name: "file", //必须填file
-        header: { "Content-Type": "multipart/form-data" },
-        formData: {
-          key: tempTokenRes.fileKey,
-          policy: tempTokenRes.policyBase64,
-          OSSAccessKeyId: tempTokenRes.accessid,
-          signature: tempTokenRes.signature,
-          success_action_status: "200",
-        },
-        success: function (res) {
+
+      // checkFlag 为 0 表示 MD5文件不存在
+      if (checkFlag == "0") {
+        //  3、调用  2.1:小程序直传，获取临时授权token 接口
+        const tempTokenRes = await this.$Q.post({
+          url: this.$api("print_ossToken"),
+          data: { extName: extName },
+          header: { "Content-Type": "application/x-www-form-urlencoded" },
+        });
+
+        that.upToOss(path, tempTokenRes).then(() => {
           // 4、调用  2.2:小程序直传，回传文件信息 接口  xxx
           that.$Q
             .post({
@@ -189,30 +239,89 @@ export default {
               header: { "Content-Type": "application/x-www-form-urlencoded" },
             })
             .then((res) => {
-              file.path = res;
+              file.filePath = res;
+              file.mdfive = md5;
               that.ossList.push(file);
               if (++i < length) {
                 that.getammeternumber(fileList, i, length);
               } else {
-                const pathList = that.ossList.map((item) => item.path);
+                // const pathList = that.ossList.map((item) => item.path);
+                const pathList = that.ossList;
                 const fileType =
                   that.type === "wxFile" || that.type === "localFile" ? 1 : 2;
                 that.ossToPdf(pathList, fileType);
               }
             });
-        },
-        fail: function (res) {
-          uni.hideLoading();
-          uni.showModal({
-            title: "错误提示",
-            content: "上传失败",
-            showCancel: false,
-            success: function (res) {},
-          });
-          return;
-        },
-      });
+        });
 
+        // checkFlag 为 1 表示 MD5文件 存在
+      } else {
+        file.filePath = transFile;
+        file.mdfive = md5;
+        that.ossList.push(file);
+        if (++i < length) {
+          that.getammeternumber(fileList, i, length);
+        } else {
+          const pathList = that.ossList;
+          const fileType =
+            that.type === "wxFile" || that.type === "localFile" ? 1 : 2;
+          that.ossToPdf(pathList, fileType);
+        }
+      }
+
+      // 二次修改, 前台直接上传到 oss
+
+      // //请求2.1成功  发起putObject请求，直传OSS
+      // uni.uploadFile({
+      //   url: "https://oss.qmprint.cn",
+      //   filePath: path,
+      //   name: "file", //必须填file
+      //   header: { "Content-Type": "multipart/form-data" },
+      //   formData: {
+      //     key: tempTokenRes.fileKey,
+      //     policy: tempTokenRes.policyBase64,
+      //     OSSAccessKeyId: tempTokenRes.accessid,
+      //     signature: tempTokenRes.signature,
+      //     success_action_status: "200",
+      //   },
+      //   success: function (res) {
+      //     // 4、调用  2.2:小程序直传，回传文件信息 接口  xxx
+      //     that.$Q
+      //       .post({
+      //         url: that.$api("print_elementInfo"),
+      //         data: {
+      //           filePath: tempTokenRes.fileKey,
+      //           fileSize: fileSize,
+      //           originalFileName: OrgiName,
+      //         },
+      //         header: { "Content-Type": "application/x-www-form-urlencoded" },
+      //       })
+      //       .then((res) => {
+      //         file.path = res;
+      //         that.ossList.push(file);
+      //         if (++i < length) {
+      //           that.getammeternumber(fileList, i, length);
+      //         } else {
+      //           const pathList = that.ossList.map((item) => item.path);
+      //           const fileType =
+      //             that.type === "wxFile" || that.type === "localFile" ? 1 : 2;
+      //           that.ossToPdf(pathList, fileType);
+      //         }
+      //       });
+      //   },
+      //   fail: function (res) {
+      //     uni.hideLoading();
+      //     uni.showModal({
+      //       title: "错误提示",
+      //       content: "上传失败",
+      //       showCancel: false,
+      //       success: function (res) {},
+      //     });
+      //     return;
+      //   },
+      // });
+
+      // 最原始 上传到后台,然后后台上传到oss
       // uni.uploadFile({
       // 	url: this.$prefix + this.$api('uploadToOSS'),
       // 	name: 'file',
@@ -252,15 +361,8 @@ export default {
       // 获取每次打印的流水号
       const formType = getApp().globalData.isPrintOrCopyOrScan;
       let flowCode = "";
-      // if (formType === 'print') {
-      // 	flowCode = await this.$Q.get({
-      // 		url: this.$api('taskFlowId')
-      // 	});
-      // 	getApp().globalData.flowCode = flowCode;
-      // } else {
       flowCode = getApp().globalData.flowCode;
-      // }
-      // ("打印流水号", flowCode, formType);
+
       // oss转pdf
       const ossToPdf = await this.$Q.put({
         url: this.$api("ossToPdf"),

@@ -9,7 +9,12 @@
       circular
     >
       <swiper-item v-for="(item, index) in lunbo" :key="index">
-        <image class="item-img" :src="item.imgUrl" mode="scaleToFill"></image>
+        <image
+          class="item-img"
+          :src="item.imgUrl"
+          @error="errorLoad(index, $event)"
+          mode="scaleToFill"
+        ></image>
       </swiper-item>
     </swiper>
     <view class="margin-top-20 bd-top-solid-default-1">
@@ -45,7 +50,7 @@ export default {
     return {
       lunbo: [
         { imgUrl: "/static/swiper/swiper1.jpg" },
-        { imgUrl: "/static/swiper/swiper1.jpg" },
+        { imgUrl: "/static/swiper/swiper2.jpg" },
         { imgUrl: "/static/swiper/swiper3.jpg" },
       ],
     };
@@ -92,6 +97,10 @@ export default {
     },
     toDevPage() {
       this.$goToUrl("/pages/dashbord/developing");
+    },
+
+    errorLoad(i, e) {
+      this.lunbo.splice(i, 1, { imgUrl: `/static/swiper/swiper${i + 1}.jpg` });
     },
   },
 };
