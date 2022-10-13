@@ -1464,7 +1464,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -3319,9 +3319,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 12:
-/*!**************************************************************!*\
-  !*** E:/online-project1/print-min-programp/utils/request.js ***!
-  \**************************************************************/
+/*!*************************************************************!*\
+  !*** E:/online-project1/print-min-program/utils/request.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3854,9 +3854,9 @@ request.interceptor.fail = /*#__PURE__*/function () {var _ref = _asyncToGenerato
 /***/ }),
 
 /***/ 13:
-/*!**********************************************************!*\
-  !*** E:/online-project1/print-min-programp/urlConfig.js ***!
-  \**********************************************************/
+/*!*********************************************************!*\
+  !*** E:/online-project1/print-min-program/urlConfig.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3872,9 +3872,9 @@ var websocketUrl = "wss://api.seek-nj.com";exports.websocketUrl = websocketUrl;
 /***/ }),
 
 /***/ 14:
-/*!**********************************************************!*\
-  !*** E:/online-project1/print-min-programp/utils/api.js ***!
-  \**********************************************************/
+/*!*********************************************************!*\
+  !*** E:/online-project1/print-min-program/utils/api.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4085,9 +4085,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 18:
-/*!**************************************************************!*\
-  !*** E:/online-project1/print-min-programp/utils/filters.js ***!
-  \**************************************************************/
+/*!*************************************************************!*\
+  !*** E:/online-project1/print-min-program/utils/filters.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4102,9 +4102,9 @@ _vue.default.filter('filter2dot', function (arg) {
 /***/ }),
 
 /***/ 19:
-/*!************************************************************!*\
-  !*** E:/online-project1/print-min-programp/utils/login.js ***!
-  \************************************************************/
+/*!***********************************************************!*\
+  !*** E:/online-project1/print-min-program/utils/login.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4304,9 +4304,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 20:
-/*!************************************************************!*\
-  !*** E:/online-project1/print-min-programp/utils/utils.js ***!
-  \************************************************************/
+/*!***********************************************************!*\
+  !*** E:/online-project1/print-min-program/utils/utils.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4417,9 +4417,9 @@ function getLocaltion() {var _this = this;return new Promise(function (resolve) 
 /***/ }),
 
 /***/ 21:
-/*!**************************************************************!*\
-  !*** E:/online-project1/print-min-programp/assets/main.scss ***!
-  \**************************************************************/
+/*!*************************************************************!*\
+  !*** E:/online-project1/print-min-program/assets/main.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4430,9 +4430,9 @@ function getLocaltion() {var _this = this;return new Promise(function (resolve) 
 /***/ }),
 
 /***/ 22:
-/*!***************************************************************!*\
-  !*** E:/online-project1/print-min-programp/assets/common.css ***!
-  \***************************************************************/
+/*!**************************************************************!*\
+  !*** E:/online-project1/print-min-program/assets/common.css ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10432,7 +10432,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -10453,14 +10453,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -10546,7 +10546,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10961,9 +10961,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 5:
-/*!********************************************************!*\
-  !*** E:/online-project1/print-min-programp/pages.json ***!
-  \********************************************************/
+/*!*******************************************************!*\
+  !*** E:/online-project1/print-min-program/pages.json ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10982,10 +10982,10 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ 10);
 
 /***/ }),
 
-/***/ 94:
-/*!****************************************************************!*\
-  !*** E:/online-project1/print-min-programp/tools/spark-md5.js ***!
-  \****************************************************************/
+/***/ 93:
+/*!***************************************************************!*\
+  !*** E:/online-project1/print-min-program/tools/spark-md5.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

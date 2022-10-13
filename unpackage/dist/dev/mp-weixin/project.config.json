@@ -19,7 +19,7 @@
         }
     },
     "compileType": "miniprogram",
-    "libVersion": "2.26.2",
+    "libVersion": "2.27.0",
     "appid": "wx5928115a94b3df94",
     "projectname": "print-min-program",
     "condition": {},
