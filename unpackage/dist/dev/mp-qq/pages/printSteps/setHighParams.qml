@@ -1,0 +1,1 @@
+<view class="data-v-13900bee"><uni-set-high vue-id="138ff838-1" formInfo="{{form}}" data-event-opts="{{[['^confirm',[['_confirm']]]]}}" bind:confirm="__e" class="data-v-13900bee" bind:__l="__l"></uni-set-high></view>

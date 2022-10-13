@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "扫描件下载",
+  "usingComponents": {
+    "my-card-scan": "/pages/user/modules/my-card-scan"
+  }
+}
