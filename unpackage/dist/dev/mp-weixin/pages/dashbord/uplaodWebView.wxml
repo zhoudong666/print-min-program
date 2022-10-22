@@ -1,1 +1,1 @@
-<view class="data-v-a9637ba2"><web-view src="https://web.qmprint.cn/#/pages/upload/index" data-event-opts="{{[['message',[['getMsg',['$event']]]],['onPostMessage',[['getOnMsg',['$event']]]]]}}" bindmessage="__e" bindonPostMessage="__e" class="data-v-a9637ba2"></web-view></view>
+<view class="data-v-a9637ba2"><web-view src="{{h5UploadPageSrc}}" data-event-opts="{{[['message',[['getMsg',['$event']]]],['onPostMessage',[['getOnMsg',['$event']]]]]}}" bindmessage="__e" bindonPostMessage="__e" class="data-v-a9637ba2"></web-view></view>

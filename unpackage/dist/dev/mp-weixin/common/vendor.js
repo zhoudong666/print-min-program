@@ -1464,7 +1464,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -3861,13 +3861,20 @@ request.interceptor.fail = /*#__PURE__*/function () {var _ref = _asyncToGenerato
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.websocketUrl = exports.requestUrl = void 0; // 青米的线上接口   appId = wxbd253487f7bf47ea
-// export const requestUrl =    "https://api.qmprint.cn";
-// export const websocketUrl = "wss://api.qmprint.cn";
+Object.defineProperty(exports, "__esModule", { value: true });exports.ossUploadUrl = exports.h5UploadPageSrc = exports.websocketUrl = exports.requestUrl = void 0; // 青米的线上接口   appId = wxbd253487f7bf47ea
+var requestUrl = "https://api.qmprint.cn";exports.requestUrl = requestUrl;
+var websocketUrl = "wss://api.qmprint.cn";
 
-// 数探云的接口  appId = wx5928115a94b3df94
-var requestUrl = "https://api.seek-nj.com";exports.requestUrl = requestUrl;
-var websocketUrl = "wss://api.seek-nj.com";exports.websocketUrl = websocketUrl;
+// // 数探云的接口  appId = wx5928115a94b3df94
+// export const requestUrl = "https://api.seek-nj.com";
+// export const websocketUrl = "wss://api.seek-nj.com";
+
+// 青米的 和 数探云的  共用的 地址有
+// h5 的 webview 上传本地文件 页面地址
+exports.websocketUrl = websocketUrl;var h5UploadPageSrc = "https://web.qmprint.cn/#/pages/upload/index";
+
+// 前台直接上传到 oss
+exports.h5UploadPageSrc = h5UploadPageSrc;var ossUploadUrl = "https://oss.qmprint.cn";exports.ossUploadUrl = ossUploadUrl;
 
 /***/ }),
 
@@ -10432,7 +10439,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -10453,14 +10460,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -10546,7 +10553,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"print-min-program","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));

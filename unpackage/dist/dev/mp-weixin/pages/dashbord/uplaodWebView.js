@@ -132,29 +132,31 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      msg: "" };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-  },
-  // 页面的生命周期
+
+
+
+
+
+
+
+
+
+var _urlConfig = __webpack_require__(/*! ../../urlConfig */ 13); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { msg: "", h5UploadPageSrc: _urlConfig.h5UploadPageSrc };}, // 页面的生命周期
   // 监听页面加载，触发一次
-  onLoad: function onLoad(options) {},
-  // 监听页面初次渲染完成，注意如果渲染速度快，会在页面进入动画完成前触发 只触发一次
-  onReady: function onReady() {},
-  // onshow和onhide触发多次
+  onLoad: function onLoad(options) {}, // 监听页面初次渲染完成，注意如果渲染速度快，会在页面进入动画完成前触发 只触发一次
+  onReady: function onReady() {}, // onshow和onhide触发多次
   onShow: function onShow() {},
   onHide: function onHide() {},
   mounted: function mounted() {},

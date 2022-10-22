@@ -1,7 +1,7 @@
 <template>
   <view>
     <web-view
-      src="https://web.qmprint.cn/#/pages/upload/index"
+      :src="h5UploadPageSrc"
       @message="getMsg"
       @onPostMessage="getOnMsg"
     ></web-view>
@@ -9,10 +9,12 @@
 </template>
 
 <script>
+import { h5UploadPageSrc } from "../../urlConfig";
 export default {
   data() {
     return {
       msg: "",
+      h5UploadPageSrc,
     };
   },
   // 页面的生命周期

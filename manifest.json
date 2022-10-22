@@ -59,7 +59,7 @@
     "mp-weixin" : {
         /* 微信小程序特有相关 */// 青米的线上接口   appId = wxbd253487f7bf47ea
         // 数探云的接口  appId = wx5928115a94b3df94
-        "appid" : "wx5928115a94b3df94",
+        "appid" : "wxbd253487f7bf47ea",
         "setting" : {
             "urlCheck" : false,
             "minified" : true,

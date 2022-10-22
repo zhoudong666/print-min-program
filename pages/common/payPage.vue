@@ -24,13 +24,7 @@
         <view class="my-card-content">
           <view class="margin-bottom-10 flex justify-content-between">
             <text>总价: {{ payObj.total | filter2dot }} 元</text>
-            <text>
-              积分抵扣
-              {{
-                (payObj.deductMerPrice + payObj.deductPlatPrice) | filter2dot
-              }}
-              元
-            </text>
+            <text> 积分抵扣 {{ scoreMoney | filter2dot }} 元 </text>
           </view>
           <view class="flex justify-content-between">
             <text>应付: {{ payObj.actualTotal | filter2dot }} 元</text>
@@ -94,7 +88,11 @@ export default {
       timeFlag: true,
     };
   },
-  computed: {},
+  computed: {
+    scoreMoney() {
+      return this.payObj.deductMerPrice + this.payObj.deductPlatPrice;
+    },
+  },
   methods: {
     async getPayList(first) {
       const params = {

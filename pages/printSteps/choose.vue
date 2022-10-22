@@ -15,6 +15,7 @@
 
 <script>
 import SparkMD5 from "@/tools/spark-md5.js";
+import { ossUploadUrl } from "../../urlConfig";
 export default {
   data() {
     return {
@@ -165,7 +166,7 @@ export default {
     upToOss(path, tempTokenRes) {
       return new Promise(function (resolve, reject) {
         uni.uploadFile({
-          url: "https://oss.qmprint.cn",
+          url: ossUploadUrl,
           filePath: path,
           name: "file", //必须填file
           header: { "Content-Type": "multipart/form-data" },
@@ -273,7 +274,7 @@ export default {
 
       // //请求2.1成功  发起putObject请求，直传OSS
       // uni.uploadFile({
-      //   url: "https://oss.qmprint.cn",
+      //   url: ossUploadUrl,
       //   filePath: path,
       //   name: "file", //必须填file
       //   header: { "Content-Type": "multipart/form-data" },
