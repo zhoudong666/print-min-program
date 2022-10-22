@@ -3864,15 +3864,16 @@ request.interceptor.fail = /*#__PURE__*/function () {var _ref = _asyncToGenerato
 Object.defineProperty(exports, "__esModule", { value: true });exports.ossUploadUrl = exports.h5UploadPageSrc = exports.websocketUrl = exports.requestUrl = void 0; // 青米的线上接口   appId = wxbd253487f7bf47ea
 var requestUrl = "https://api.qmprint.cn";exports.requestUrl = requestUrl;
 var websocketUrl = "wss://api.qmprint.cn";
-
-// // 数探云的接口  appId = wx5928115a94b3df94
-// export const requestUrl = "https://api.seek-nj.com";
-// export const websocketUrl = "wss://api.seek-nj.com";
-
-// 青米的 和 数探云的  共用的 地址有
 // h5 的 webview 上传本地文件 页面地址
 exports.websocketUrl = websocketUrl;var h5UploadPageSrc = "https://web.qmprint.cn/#/pages/upload/index";
 
+// // 数探云的接口  appId = wx5928115a94b3df94
+// export const requestUrl = "https://api.seek-nj.com/v3";
+// export const websocketUrl = "wss://api.seek-nj.com/v3";
+// // h5 的 webview 上传本地文件 页面地址
+// export const h5UploadPageSrc = "https://web.seek-nj.com/#/pages/upload/index";
+
+// 青米的 和 数探云的  共用的 地址有
 // 前台直接上传到 oss
 exports.h5UploadPageSrc = h5UploadPageSrc;var ossUploadUrl = "https://oss.qmprint.cn";exports.ossUploadUrl = ossUploadUrl;
 
