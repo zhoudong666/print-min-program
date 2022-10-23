@@ -1,6 +1,6 @@
 // 青米的线上接口   appId = wxbd253487f7bf47ea
-export const requestUrl = "https://api.qmprint.cn";
-export const websocketUrl = "wss://api.qmprint.cn";
+export const requestUrl = "https://api.qmprint.cn/v3";
+export const websocketUrl = "wss://api.qmprint.cn/v3";
 // h5 的 webview 上传本地文件 页面地址
 export const h5UploadPageSrc = "https://web.qmprint.cn/#/pages/upload/index";
 

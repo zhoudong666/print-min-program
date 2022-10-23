@@ -766,8 +766,8 @@ function populateParameters(result) {var _result$brand =
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "3.6.4",
-    uniRuntimeVersion: "3.6.4",
+    uniCompileVersion: "3.5.3",
+    uniRuntimeVersion: "3.5.3",
     uniPlatform: undefined || "mp-weixin",
     deviceBrand: deviceBrand,
     deviceModel: model,
@@ -1222,12 +1222,11 @@ function getPushClientId(args) {
   var hasSuccess = isFn(success);
   var hasFail = isFn(fail);
   var hasComplete = isFn(complete);
-
   Promise.resolve().then(function () {
     if (typeof enabled === 'undefined') {
       enabled = false;
       cid = '';
-      cidErrMsg = 'uniPush is not enabled';
+      cidErrMsg = 'unipush is not enabled';
     }
     getPushCidCallbacks.push(function (cid, errMsg) {
       var res;
@@ -1290,17 +1289,7 @@ var customize = cached(function (str) {
 function initTriggerEvent(mpInstance) {
   var oldTriggerEvent = mpInstance.triggerEvent;
   var newTriggerEvent = function newTriggerEvent(event) {for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {args[_key3 - 1] = arguments[_key3];}
-    // 事件名统一转驼峰格式，仅处理：当前组件为 vue 组件、当前组件为 vue 组件子组件
-    if (this.$vm || this.dataset && this.dataset.comType) {
-      event = customize(event);
-    } else {
-      // 针对微信/QQ小程序单独补充驼峰格式事件，以兼容历史项目
-      var newEvent = customize(event);
-      if (newEvent !== event) {
-        oldTriggerEvent.apply(this, [newEvent].concat(args));
-      }
-    }
-    return oldTriggerEvent.apply(this, [event].concat(args));
+    return oldTriggerEvent.apply(mpInstance, [customize(event)].concat(args));
   };
   try {
     // 京东小程序 triggerEvent 为只读
@@ -1397,29 +1386,6 @@ function initHooks(mpOptions, hooks, vueOptions) {
       };
     }
   });
-}
-
-function initUnknownHooks(mpOptions, vueOptions) {var excludes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  findHooks(vueOptions).forEach(function (hook) {return initHook$1(mpOptions, hook, excludes);});
-}
-
-function findHooks(vueOptions) {var hooks = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  if (vueOptions) {
-    Object.keys(vueOptions).forEach(function (name) {
-      if (name.indexOf('on') === 0 && isFn(vueOptions[name])) {
-        hooks.push(name);
-      }
-    });
-  }
-  return hooks;
-}
-
-function initHook$1(mpOptions, hook, excludes) {
-  if (excludes.indexOf(hook) === -1 && !hasOwn(mpOptions, hook)) {
-    mpOptions[hook] = function (args) {
-      return this.$vm && this.$vm.__call_hook(hook, args);
-    };
-  }
 }
 
 function initVueComponent(Vue, vueOptions) {
@@ -1707,7 +1673,7 @@ function getExtraValue(vm, dataPathsArray) {
   return context;
 }
 
-function processEventExtra(vm, extra, event, __args__) {
+function processEventExtra(vm, extra, event) {
   var extraObj = {};
 
   if (Array.isArray(extra) && extra.length) {
@@ -1730,7 +1696,11 @@ function processEventExtra(vm, extra, event, __args__) {
           if (dataPath === '$event') {// $event
             extraObj['$' + index] = event;
           } else if (dataPath === 'arguments') {
-            extraObj['$' + index] = event.detail ? event.detail.__args__ || __args__ : __args__;
+            if (event.detail && event.detail.__args__) {
+              extraObj['$' + index] = event.detail.__args__;
+            } else {
+              extraObj['$' + index] = [event];
+            }
           } else if (dataPath.indexOf('$event.') === 0) {// $event.target.value
             extraObj['$' + index] = vm.__get_value(dataPath.replace('$event.', ''), event);
           } else {
@@ -1757,12 +1727,6 @@ function getObjByArray(arr) {
 
 function processEventArgs(vm, event) {var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];var extra = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];var isCustom = arguments.length > 4 ? arguments[4] : undefined;var methodName = arguments.length > 5 ? arguments[5] : undefined;
   var isCustomMPEvent = false; // wxcomponent 组件，传递原始 event 对象
-
-  // fixed 用户直接触发 mpInstance.triggerEvent
-  var __args__ = isPlainObject(event.detail) ?
-  event.detail.__args__ || [event.detail] :
-  [event.detail];
-
   if (isCustom) {// 自定义事件
     isCustomMPEvent = event.currentTarget &&
     event.currentTarget.dataset &&
@@ -1771,11 +1735,11 @@ function processEventArgs(vm, event) {var args = arguments.length > 2 && argumen
       if (isCustomMPEvent) {
         return [event];
       }
-      return __args__;
+      return event.detail.__args__ || event.detail;
     }
   }
 
-  var extraObj = processEventExtra(vm, extra, event, __args__);
+  var extraObj = processEventExtra(vm, extra, event);
 
   var ret = [];
   args.forEach(function (arg) {
@@ -1784,7 +1748,7 @@ function processEventArgs(vm, event) {var args = arguments.length > 2 && argumen
         ret.push(event.target.value);
       } else {
         if (isCustom && !isCustomMPEvent) {
-          ret.push(__args__[0]);
+          ret.push(event.detail.__args__[0]);
         } else {// wxcomponent 组件或内置组件
           ret.push(event);
         }
@@ -2091,7 +2055,6 @@ function parseBaseApp(vm, _ref3)
   initAppLocale(_vue.default, vm, normalizeLocale(wx.getSystemInfoSync().language) || LOCALE_EN);
 
   initHooks(appOptions, hooks);
-  initUnknownHooks(appOptions, vm.$options);
 
   return appOptions;
 }
@@ -2370,7 +2333,6 @@ function parseBasePage(vuePageOptions, _ref6)
     this.$vm.$mp.query = query; // 兼容 mpvue
     this.$vm.__call_hook('onLoad', query);
   };
-  initUnknownHooks(pageOptions.methods, vuePageOptions, ['onReady']);
 
   return pageOptions;
 }
@@ -3319,9 +3281,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 12:
-/*!*************************************************************!*\
-  !*** E:/online-project1/print-min-program/utils/request.js ***!
-  \*************************************************************/
+/*!*************************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/utils/request.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3329,11 +3291,11 @@ if (hadRuntime) {
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 9));var _urlConfig = __webpack_require__(/*! ../urlConfig */ 13);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * A Request useing App network request design {@link http://ext.dcloud.net.cn/plugin?id=709}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @author Jamling <li.jamling@gmail.com>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * @version 1.0.1
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          **/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * A Request useing App network request design {@link http://ext.dcloud.net.cn/plugin?id=709}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * @author Jamling <li.jamling@gmail.com>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     * @version 1.0.1
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     **/
 "use strict";var
 Request = /*#__PURE__*/function () {function Request() {_classCallCheck(this, Request);_defineProperty(this, "config",
 
@@ -3854,16 +3816,16 @@ request.interceptor.fail = /*#__PURE__*/function () {var _ref = _asyncToGenerato
 /***/ }),
 
 /***/ 13:
-/*!*********************************************************!*\
-  !*** E:/online-project1/print-min-program/urlConfig.js ***!
-  \*********************************************************/
+/*!*********************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/urlConfig.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.ossUploadUrl = exports.h5UploadPageSrc = exports.websocketUrl = exports.requestUrl = void 0; // 青米的线上接口   appId = wxbd253487f7bf47ea
-var requestUrl = "https://api.qmprint.cn";exports.requestUrl = requestUrl;
-var websocketUrl = "wss://api.qmprint.cn";
+var requestUrl = "https://api.qmprint.cn/v3";exports.requestUrl = requestUrl;
+var websocketUrl = "wss://api.qmprint.cn/v3";
 // h5 的 webview 上传本地文件 页面地址
 exports.websocketUrl = websocketUrl;var h5UploadPageSrc = "https://web.qmprint.cn/#/pages/upload/index";
 
@@ -3880,9 +3842,9 @@ exports.h5UploadPageSrc = h5UploadPageSrc;var ossUploadUrl = "https://oss.qmprin
 /***/ }),
 
 /***/ 14:
-/*!*********************************************************!*\
-  !*** E:/online-project1/print-min-program/utils/api.js ***!
-  \*********************************************************/
+/*!*********************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/utils/api.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4093,9 +4055,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 18:
-/*!*************************************************************!*\
-  !*** E:/online-project1/print-min-program/utils/filters.js ***!
-  \*************************************************************/
+/*!*************************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/utils/filters.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4110,9 +4072,9 @@ _vue.default.filter('filter2dot', function (arg) {
 /***/ }),
 
 /***/ 19:
-/*!***********************************************************!*\
-  !*** E:/online-project1/print-min-program/utils/login.js ***!
-  \***********************************************************/
+/*!***********************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/utils/login.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4312,9 +4274,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 20:
-/*!***********************************************************!*\
-  !*** E:/online-project1/print-min-program/utils/utils.js ***!
-  \***********************************************************/
+/*!***********************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/utils/utils.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4425,9 +4387,9 @@ function getLocaltion() {var _this = this;return new Promise(function (resolve) 
 /***/ }),
 
 /***/ 21:
-/*!*************************************************************!*\
-  !*** E:/online-project1/print-min-program/assets/main.scss ***!
-  \*************************************************************/
+/*!*************************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/assets/main.scss ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4438,9 +4400,9 @@ function getLocaltion() {var _this = this;return new Promise(function (resolve) 
 /***/ }),
 
 /***/ 22:
-/*!**************************************************************!*\
-  !*** E:/online-project1/print-min-program/assets/common.css ***!
-  \**************************************************************/
+/*!**************************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/assets/common.css ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10740,12 +10702,9 @@ function internalMixin(Vue) {
 
   Vue.prototype.$emit = function(event) {
     if (this.$scope && event) {
-      var triggerEvent = this.$scope['_triggerEvent'] || this.$scope['triggerEvent'];
-      if (triggerEvent) {
-        triggerEvent.call(this.$scope, event, {
-          __args__: toArray(arguments, 1)
-        });
-      }
+      (this.$scope['_triggerEvent'] || this.$scope['triggerEvent']).call(this.$scope, event, {
+        __args__: toArray(arguments, 1)
+      });
     }
     return oldEmit.apply(this, arguments)
   };
@@ -10912,8 +10871,7 @@ var LIFECYCLE_HOOKS$1 = [
     // 'onReady', // 兼容旧版本，应该移除该事件
     'onPageShow',
     'onPageHide',
-    'onPageResize',
-    'onUploadDouyinVideo'
+    'onPageResize'
 ];
 function lifecycleMixin$1(Vue) {
 
@@ -10969,9 +10927,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 5:
-/*!*******************************************************!*\
-  !*** E:/online-project1/print-min-program/pages.json ***!
-  \*******************************************************/
+/*!*******************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/pages.json ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10991,9 +10949,9 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ 10);
 /***/ }),
 
 /***/ 93:
-/*!***************************************************************!*\
-  !*** E:/online-project1/print-min-program/tools/spark-md5.js ***!
-  \***************************************************************/
+/*!***************************************************************************!*\
+  !*** E:/Project-Code/online-project/print-min-program/tools/spark-md5.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
