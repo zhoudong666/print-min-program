@@ -1,1 +1,0 @@
-<view class="page-container bg-white tac">操作指南</view>

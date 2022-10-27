@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "附近店铺",
-  "usingComponents": {
-    "uni-mapshop": "/components/uni-mapshop"
-  }
-}

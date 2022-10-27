@@ -1,1 +1,0 @@
-<view class="scan-page data-v-21a53836"><uni-scan bind:scan_result="__e" vue-id="21a52480-1" data-event-opts="{{[['^scan_result',[['scan_result']]]]}}" class="data-v-21a53836" bind:__l="__l"></uni-scan></view>

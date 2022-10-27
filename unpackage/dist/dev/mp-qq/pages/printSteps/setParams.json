@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "已选文档列表",
-  "usingComponents": {
-    "uni-set-params": "/components/uni-set-params"
-  }
-}

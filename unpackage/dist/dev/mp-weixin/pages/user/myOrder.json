@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我的订单",
-  "usingComponents": {
-    "uni-tabs": "/components/uni-tabs",
-    "my-card-order": "/pages/user/modules/my-card-order"
-  }
-}

@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "确认支付",
-  "usingComponents": {
-    "uni-file-list": "/components/uni-file-list"
-  }
-}
